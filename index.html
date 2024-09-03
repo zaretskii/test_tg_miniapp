@@ -24,6 +24,20 @@
             document.getElementById('userid').textContent = user.id;
         }
 
+        const mainButton = window.Telegram.WebApp.MainButton; 
+        mainButton.text = "Сохранить настройки"; 
+        mainButton.enable(); 
+        mainButton.show();
+
+        mainButton.onClick( function (){
+            const data = {
+                id: user.id,
+                name: user.first_name,
+                // Добавьте другие нужные данные
+            };
+            tg.sendData(JSON.stringify(data)); 
+        }) 
+
         function sendUserData() {
             const data = {
                 id: user.id,
