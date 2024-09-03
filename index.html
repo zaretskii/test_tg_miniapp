@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мини-апп с идентификацией пользователя</title>
+    <title>Simple Telegram Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body>
-    <h1>Привет, <span id="username">пользователь</span>!</h1>
-    <p>Ваш ID: <span id="userid"></span></p>
-    <button onclick="sendUserData()">Отправить данные в бот</button>
-
     <script>
+        // Получаем объект Web App
         const tg = window.Telegram.WebApp;
 
-        // Инициализация мини-аппа
-        tg.expand();
+        // Отправляем команду /start боту
+        function startGame() {
+            tg.sendData('/start');
+        }
+
+        // Отправляем команду сделать ход
+        function makeMove() {
+            tg.sendData('/make_move');
+        }
+
+        // Отправляем команду отправить сообщение
+        function sendMessage() {
+            tg.sendData('/send_message');
+        }
 
         // Получение данных пользователя
         const user = tg.initDataUnsafe.user;
@@ -23,29 +30,13 @@
             document.getElementById('username').textContent = user.first_name;
             document.getElementById('userid').textContent = user.id;
         }
-
-        const mainButton = window.Telegram.WebApp.MainButton; 
-        mainButton.text = "Сохранить настройки"; 
-        mainButton.enable(); 
-        mainButton.show();
-
-        mainButton.onClick( function (){
-            const data = {
-                id: user.id,
-                name: user.first_name,
-                // Добавьте другие нужные данные
-            };
-            tg.sendData(JSON.stringify(data)); 
-        }) 
-
-        function sendUserData() {
-            const data = {
-                id: user.id,
-                name: user.first_name,
-                // Добавьте другие нужные данные
-            };
-            tg.sendData("Hello World!");
-        }
     </script>
+</head>
+<body>
+    <h1>Привет, <span id="username">пользователь</span>!</h1>
+    <p>Ваш ID: <span id="userid"></span></p>
+    <button onclick="startGame()">Start Game</button>
+    <button onclick="makeMove()">Make Move</button>
+    <button onclick="sendMessage()">Send Message to Bot</button>
 </body>
 </html>
